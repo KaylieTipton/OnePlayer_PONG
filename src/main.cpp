@@ -24,8 +24,8 @@ float inputDirectionY = 0.0f;
 float movementSpeed = 2.0f;
 
 float ballXVel = -1.0f;
-float ballYVel = 0;
-float ballMovementSpeed = 10.0f;
+float ballYVel = 1.0f;
+float ballMovementSpeed = 5.0f;
 
 SDL_Rect ballRect;
 SDL_Rect paddleRect;
@@ -53,25 +53,25 @@ int main(int argc, char* args[])
     paddleRect.w = 95;
     paddleRect.h = 55;
 
-    leftRect.x = SCREEN_WIDTH;
+    leftRect.x = -5;
     leftRect.y = 0;
-    leftRect.w = 1;
+    leftRect.w = 5;
     leftRect.h = SCREEN_HEIGHT;
 
-    rightRect.x = 0;
-    rightRect.y = SCREEN_WIDTH;
-    rightRect.w = 1;
+    rightRect.x = SCREEN_WIDTH;
+    rightRect.y = 0;
+    rightRect.w = 5;
     rightRect.h = SCREEN_HEIGHT;
     
-    topRect.x = SCREEN_HEIGHT;
+    topRect.x = 0;
     topRect.y = 0;
     topRect.w = SCREEN_WIDTH;
-    topRect.h = 1;
+    topRect.h = 5;
 
-    bottomRect.x = 0;
+    bottomRect.x = -5;
     bottomRect.y = SCREEN_HEIGHT;
     bottomRect.w = SCREEN_WIDTH;
-    bottomRect.h = 1;
+    bottomRect.h = 5;
 
     ballRect.x = paddleRect.x + 20;
     ballRect.y = paddleRect.y - 20;
@@ -129,13 +129,15 @@ int main(int argc, char* args[])
             }
             if(RectsOverlap(ballRect, topRect))
             {
-                ballYVel = -1.0f;
+                ballYVel = 1.0f;
             }
             if(RectsOverlap(ballRect, paddleRect))
             {
-                ballYVel = 1.0f;
+                ballYVel = -1.0f;
             }
-
+            
+            ballRect.x += ballXVel * ballMovementSpeed;
+            ballRect.y += ballYVel * ballMovementSpeed;
 
             /*ballRect.x = (ballRect.x + (ballRect.w/2.0f) < leftRect.x) ? (ballRect.x + (ballXVel * ballMovementSpeed)) : ballXVel = 1.0f;
             ballRect.x = (ballRect.x > -(ballRect.w/2.0f)) ? ballRect.x : ballXVel = -1.0f;
@@ -277,7 +279,7 @@ bool LoadFiles()
         return false;
 
     // load sounds
-    hitSound = Mix_LoadWAV("E:/Git Projects/bamgp-project-template/assets/sounds/JuhaniJunkala[RetroGameMusicPack]TitleScreen.wav");
+    hitSound = Mix_LoadWAV("assets/sounds/JuhaniJunkala[RetroGameMusicPack]TitleScreen.wav");
 
     if (hitSound == nullptr)
         return false;
