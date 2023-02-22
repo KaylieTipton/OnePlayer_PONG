@@ -3,6 +3,7 @@
 #include <SDL_ttf.h>
 #include <iostream>
 #include <stdio.h>
+#include <stdlib.h>
 
 const int FPS = 30;
 const int FRAME_DELAY = 1000/FPS;
@@ -23,8 +24,8 @@ float inputDirectionX = 0.0f;
 float inputDirectionY = 0.0f;
 float movementSpeed = 2.0f;
 
-float ballXVel = -1.0f;
-float ballYVel = 1.0f;
+float ballXVel = 0.0f;
+float ballYVel = 0.0f;
 float ballMovementSpeed = 5.0f;
 
 SDL_Rect ballRect;
@@ -47,6 +48,7 @@ bool RectsOverlap(SDL_Rect rect1, SDL_Rect rect2);
 int main(int argc, char* args[])
 {
     std::cout << "Hello World" << std::endl;
+    std::srand(std::time(NULL));
 
     paddleRect.x = SCREEN_WIDTH/2 - 95/2;
     paddleRect.y = 500;
@@ -212,6 +214,22 @@ bool ProgramIsRunning()
     
     if (keys[SDL_SCANCODE_DOWN])
         inputDirectionY = 1.0f;
+
+    if (keys[SDL_SCANCODE_SPACE])
+    {
+        ballXVel = 1 + rand() % 10;
+        if (ballXVel >= 1 && ballXVel <= 5)
+            ballXVel = -1.0f;
+        if (ballXVel >= 6 && ballXVel <= 10)
+            ballXVel = 1.0f;
+            
+        ballYVel = 1 + rand() % 10;
+        if (ballYVel >= 1 && ballYVel <= 5)
+            ballYVel = -1.0f;
+        if (ballYVel >= 6 && ballYVel <= 10)
+            ballYVel = 1.0f;
+
+    }
 
     while (SDL_PollEvent(&event))
     {
