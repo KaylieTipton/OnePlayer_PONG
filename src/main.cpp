@@ -22,7 +22,9 @@ TTF_Font *gameFont = nullptr;
 
 float inputDirectionX = 0.0f;
 float inputDirectionY = 0.0f;
-float movementSpeed = 2.0f;
+float movementSpeed = 5.0f;
+float score = 0.0f;
+float highscore = 0.0f;
 
 float ballXVel = 0.0f;
 float ballYVel = 0.0f;
@@ -137,6 +139,17 @@ int main(int argc, char* args[])
             {
                 ballYVel = -1.0f;
             }
+            if(RectsOverlap(ballRect, bottomRect))
+            {
+                ballXVel = 0.0f;
+                ballYVel = 0.0f;
+                paddleRect.x = SCREEN_WIDTH/2 - 95/2;
+                paddleRect.y = 500;
+                ballRect.x = paddleRect.x + 20;
+                ballRect.y = paddleRect.y - 20;
+                if (score > highscore)
+                    score = highscore;
+            }
             
             ballRect.x += ballXVel * ballMovementSpeed;
             ballRect.y += ballYVel * ballMovementSpeed;
@@ -150,7 +163,8 @@ int main(int argc, char* args[])
             DrawImage(paddleSprite, backBuffer, paddleRect.x, paddleRect.y);
 
             // font
-            DrawText(backBuffer, "Demo", 100, 100, gameFont, 255u, 255u, 255u);
+            DrawText(backBuffer, "Score: ", 25, 25, gameFont, 255u, 255u, 255u);
+            DrawText(backBuffer, "HighScore: ", 450, 25, gameFont, 255u, 255u, 255u);
 
             // end draw frame
             SDL_UpdateWindowSurface(window);
