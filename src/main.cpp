@@ -336,7 +336,7 @@ void DrawImageFrame(SDL_Surface *image, SDL_Surface *destSurface,
 bool LoadFiles()
 {
     // load images
-    backGroundImage = LoadImage("assets/graphics/background.bmp");
+    backGroundImage = LoadImage("assets/graphics/greyBackground.bmp");
     sprite = LoadImage("assets/graphics/ball.bmp");
     paddleSprite = LoadImage("assets/graphics/Paddle.bmp");
 
